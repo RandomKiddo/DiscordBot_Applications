@@ -1,15 +1,37 @@
 # Discord Bot Applications
 
+Applications of various Discord API's for Discord Bots. 
+
 ___
 
 ### Table of Contents
 
 1. [How to Use](#how-to-use)
-2. [License](#license)
+2. [API List](#api-list)
+3. [License](#license)
 
 ___
 
 ### How to Use
+
+Contained within this repository, are multiple `application` files for various Discord API's.
+The code in this repository may be used for personal discord bots, as no application `Token`s have been shared.
+
+Notes:
+- All usage of this repository must follow the terms of the Open Software License 3.0 (See [License](#license))
+- Not all of the code in this repository has been tested
+- Dependencies have not been managed within this repository, this must be done manually
+
+___
+
+### API List
+
+- Python -> [discord.py](https://github.com/Rapptz/discord.py)
+- JavaScript -> [discord.js](https://github.com/discordjs/discord.js)
+- TypeScript -> [discord.ts](https://github.com/OwenCalvin/discord.ts)
+- Go -> [discordgo](https://github.com/bwmarrin/discordgo)
+- Java -> [JDA](https://github.com/DV8FromTheWorld/JDA)
+- C# -> [DSharpPlus](https://github.com/DSharpPlus/DSharpPlus)
 
 ___
 
@@ -193,4 +215,4 @@ ___
 
 [Back to Top](#)
 
-<sub>This page was last edited on 03/28/21 @ 11:36AM</sub>
+<sub>This page was last edited on 03/28/21 @ 11:49AM</sub>
