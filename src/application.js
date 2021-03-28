@@ -10,7 +10,8 @@ dealing with modified and distributed derivative works.
 For more information, see: https://opensource.org/licenses/OSL-3.0
 
 The current maintainer of this work is RandomKiddo
-This work only consists of source code files, written in python or javascript
+This work only consists of source code files, written in:
+python, javascript, typescript, go, java, c#
 */
 
 const Discord = require('discord.js');
