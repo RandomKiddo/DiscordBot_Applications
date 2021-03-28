@@ -10,7 +10,8 @@ dealing with modified and distributed derivative works.
 For more information, see: https://opensource.org/licenses/OSL-3.0
 
 The current maintainer of this work is RandomKiddo
-This work only consists of source code files, written in python or javascript
+This work only consists of source code files, written in:
+python, javascript, typescript, go, java, c#
 '''
 
 import discord
@@ -42,6 +43,14 @@ async def on_error(event, *args, **kwargs):
         file.writeline(str(kwargs))
     file.close()
 
+async def errmsg(ctx, description):
+    embed = discord.Embed(
+        title = 'An Error Was Encountered',
+        description = description,
+        colour = discord.Colour.red()
+    )
+    await ctx.send(embed=embed)
+
 # Commands
 
 @client.command()
@@ -55,6 +64,7 @@ async def ping(ctx):
 @client.command()
 async def lock(ctx, amount=1, eta='UNKNOWN'):
     if not ctx.author.guild_permissions.administrator or ctx.author.voice.channel is None:
+        await errmsg(ctx, description='You Need Admin Permissions For This')
         return
     await ctx.author.voice.channel.edit(
         name = ctx.author.voice.channel.name + ' (LOCKED ETA_{})'.format(eta),
@@ -64,6 +74,7 @@ async def lock(ctx, amount=1, eta='UNKNOWN'):
 @client.command()
 async def unlock(ctx):
     if not ctx.author.guild_permissions.administrator or ctx.author.voice.channel is None:
+        await errmsg(ctx, description='You Need Admin Permissions For This')
         return
     await ctx.author.voice.channel.edit(
         name = channel.name[:channel.name.index('LOCKED')-2],
@@ -73,7 +84,7 @@ async def unlock(ctx):
 @client.command()
 async def poll(ctx, question, *args):
     if (len(args) > 9):
-        await ctx.send('Max Options = 9')
+        await errmsg(ctx, description='Poll Can Only Have A Maximum Of 9 Options (For Emoji & Cleanliness Reasons')
         return
     embed = discord.Embed(
         title = str(question),
