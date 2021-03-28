@@ -17,6 +17,8 @@ import discord
 from discord.ext import commands
 import datetime
 
+TOKEN = 'YOUR_TOKEN_HERE'
+
 client = commands.Bot(command_prefix = '!', intents = discord.Intents.all()) # unnecessary declaration for implementation
 
 # Events
@@ -67,3 +69,29 @@ async def unlock(ctx):
         name = channel.name[:channel.name.index('LOCKED')-2],
         user_limit = None
     )
+
+@client.command()
+async def poll(ctx, question, *args):
+    if (len(args) > 9):
+        await ctx.send('Max Options = 9')
+        return
+    embed = discord.Embed(
+        title = str(question),
+        description = 'React With The Appropriate Emoji(s) To Vote!',
+        colour = discord.Colour.default()
+    )
+    emojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
+    index = 0
+    for _ in args:
+        embed.add_field(
+            name = emojis[index],
+            value = _,
+            inline = False
+        )
+        index += 1
+    embed.set_footer(text='Asked by: {}'.format(ctx.author.name))
+    message = await ctx.channel.send(embed=embed)
+    for _ in range(len(args)):
+        await message.add_reaction(emojis[_])
+
+client.run(TOKEN)
