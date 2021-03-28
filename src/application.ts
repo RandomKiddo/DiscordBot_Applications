@@ -24,7 +24,7 @@ export class AppDiscord {
             const cmd = message.content.replace(this._prefix, "").toLowerCase();
             switch (cmd) {
                 case "ping":
-                    //To Add Ping Logic
+                    message.channel.send("Pong!");
                     break;
                 default:
                     break;
