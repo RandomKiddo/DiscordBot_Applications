@@ -52,6 +52,13 @@ const cmds = {
                 : Number(input) + 1;
             message.channel.bulkDelete(amount, true);
         }
+    },
+    "poll": {
+        callback: (msg) => {
+            let m = msg.content.toString().toLowerCase().trim();
+            m.replace("poll ", "");
+            let args = m.split("\"");
+        }
     }
 };
 

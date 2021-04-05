@@ -21,6 +21,7 @@ Notes:
 - All usage of this repository must follow the terms of the Open Software License 3.0 (See [License](#license))
 - Not all of the code in this repository has been tested
 - Dependencies have not been managed within this repository, this must be done manually
+- `application` may not be a suitable name for runtime, especially for Java
 
 ___
 
@@ -31,7 +32,6 @@ ___
 - TypeScript -> [discord.ts](https://github.com/OwenCalvin/discord.ts)
 - Go -> [discordgo](https://github.com/bwmarrin/discordgo)
 - Java -> [JDA](https://github.com/DV8FromTheWorld/JDA)
-- C# -> [DSharpPlus](https://github.com/DSharpPlus/DSharpPlus)
 
 ___
 
@@ -215,4 +215,4 @@ ___
 
 [Back to Top](#)
 
-<sub>This page was last edited on 03/28/21 @ 11:49AM</sub>
+<sub>This page was last edited on 04/05/21 @ 2:31PM</sub>
