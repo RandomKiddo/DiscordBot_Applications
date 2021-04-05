@@ -25,6 +25,7 @@ client.on('ready', () => {
 	client.user.setActivity('discord.js', { type: 'PLAYING' });
 });
 
+//Holds Command Callbacks
 const cmds = {
     "ping": {
         callback: (msg) => {
@@ -54,6 +55,7 @@ const cmds = {
     }
 };
 
+//Processes Commands
 client.on('message', (msg) => {
 	const m = msg.content.toString();
     if (!m.startsWith(PREFIX) || msg.author.bot) return;
