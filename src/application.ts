@@ -26,7 +26,22 @@ import {
 @Discord
 export class AppDiscord {
     private static _client: Client;
-    private _prefix: string = "!";
+    private _prefix: String = "!";
+    private static _cmds: Object = {
+        "ping": {
+            callback: function(message: Message, client: Client) {
+                message.channel.send("Pong!");
+            }
+        },
+        "clear": {
+            callback: function(message: Message, client: Client) {
+                let cmd = message.content.replace(this._prefix, "").toLowerCase();
+                cmd = cmd.replace("clear ", "");
+                const num = Number(cmd.trim());
+                message.channel.bulkDelete(num, true);
+            }
+        }
+    };
     static start() {
         this._client = new Client();
         this._client.login(
@@ -38,17 +53,10 @@ export class AppDiscord {
     async onMessage(message: Message, client: Client) {
         if (AppDiscord._client.user.id !== message.author.id) {
             let cmd = message.content.replace(this._prefix, "").toLowerCase();
-            switch (cmd) {
-                case "ping":
-                    message.channel.send("Pong!");
-                    break;
-                case "clear":
-                    cmd = cmd.replace("clear ", "");
-                    const num = Number(cmd.trim());
-                    message.channel.bulkDelete(num, true);
-                    break;
-                default:
-                    break;
+            try {
+                AppDiscord._cmds[cmd.trim()].callback(message, client);
+            } catch (err) {
+                return;
             }
         }
     }
