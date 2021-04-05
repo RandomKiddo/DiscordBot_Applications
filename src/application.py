@@ -11,7 +11,7 @@ For more information, see: https://opensource.org/licenses/OSL-3.0
 
 The current maintainer of this work is RandomKiddo
 This work only consists of source code files, written in:
-python, javascript, typescript, go, java, c#
+python, javascript, typescript, go, or java
 '''
 
 import discord
@@ -42,6 +42,14 @@ async def on_error(event, *args, **kwargs):
         file.writeline(str(args))
         file.writeline(str(kwargs))
     file.close()
+
+@client.event
+async def on_connect():
+    pass
+
+@client.event
+async def on_disconnect():
+    pass
 
 async def errmsg(ctx, description):
     embed = discord.Embed(
@@ -104,5 +112,12 @@ async def poll(ctx, question, *args):
     message = await ctx.channel.send(embed=embed)
     for _ in range(len(args)):
         await message.add_reaction(emojis[_])
+
+@client.command()
+async def clear(ctx, amount=10):
+    if not ctx.author.guild_permissions.administrator:
+        await errmsg(ctx, 'You don\'t have permission to do this')
+        return
+    await ctx.channel.purge(limit=amount)
 
 client.run(TOKEN)
