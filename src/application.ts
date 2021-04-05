@@ -11,7 +11,7 @@ For more information, see: https://opensource.org/licenses/OSL-3.0
 
 The current maintainer of this work is RandomKiddo
 This work only consists of source code files, written in:
-python, javascript, typescript, go, java, c#
+python, javascript, typescript, go, or java
 */
 
 import {
@@ -37,10 +37,15 @@ export class AppDiscord {
     @On("message")
     async onMessage(message: Message, client: Client) {
         if (AppDiscord._client.user.id !== message.author.id) {
-            const cmd = message.content.replace(this._prefix, "").toLowerCase();
+            let cmd = message.content.replace(this._prefix, "").toLowerCase();
             switch (cmd) {
                 case "ping":
                     message.channel.send("Pong!");
+                    break;
+                case "clear":
+                    cmd = cmd.replace("clear ", "");
+                    const num = Number(cmd.trim());
+                    message.channel.bulkDelete(num, true);
                     break;
                 default:
                     break;
