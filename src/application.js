@@ -11,7 +11,7 @@ For more information, see: https://opensource.org/licenses/OSL-3.0
 
 The current maintainer of this work is RandomKiddo
 This work only consists of source code files, written in:
-python, javascript, typescript, go, java, c#
+python, javascript, typescript, go, or java
 */
 
 const Discord = require('discord.js');
@@ -25,28 +25,41 @@ client.on('ready', () => {
 	client.user.setActivity('discord.js', { type: 'PLAYING' });
 });
 
+const cmds = {
+    "ping": {
+        callback: (msg) => {
+            let api = client.ws.ping;
+            let bot = Date.now() - message.createdTimestamp;
+            message.channel.send(`Pong! API: \`${api}ms\`, Bot: \`${bot}ms\``);
+        }
+    },
+    "clear": {
+        callback: (msg) => {
+            if (!msg.member.hasPermission('MANAGE_MESSAGES')) {
+                return message.channel.send(
+                    "You can\'t use this command"
+                );
+            }
+            const args = message.content
+                .toLowerCase()
+                .slice(PREFIX.length)
+                .trim()
+                .split(/\s+/);
+            const [command, input] = args;
+            const amount = Number(input) > 100
+                ? 101
+                : Number(input) + 1;
+            message.channel.bulkDelete(amount, true);
+        }
+    }
+};
+
 client.on('message', (msg) => {
 	const m = msg.content.toString();
     if (!m.startsWith(PREFIX) || msg.author.bot) return;
-	if (m.includes('ping')) {
-		let api = client.ws.ping;
-		let bot = Date.now() - messaeg.createdTimestamp;
-		message.channel.send(`Pong! API: \`${api}ms\`, Bot: \`${bot}ms\``);
-	} else if (m.includes('clear')) {
-        if (!msg.member.hasPermission('MANAGE_MESSAGES')) {
-            return message.channel.send(
-                "You can\'t use this command"
-            );
-        }
-        const args = message.content
-            .toLowerCase()
-            .slice(PREFIX.length)
-            .trim()
-            .split(/\s+/);
-        const [command, input] = args;
-        const amount = Number(input) > 100
-            ? 101
-            : Number(input) + 1;
-        message.channel.bulkDelete(amount, true);
+    try {
+        cmds[m.toLowerCase().trim()].callback(msg);
+    } catch (err){
+        return;
     }
 });
