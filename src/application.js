@@ -80,6 +80,20 @@ const cmds = {
             let m = msg.content.toString().toLowerCase().trim();
             m.replace("poll ", "");
             let args = m.split("\"");
+            const query = args[0];
+            args = args.slice(1);
+            let embed = Discord.MessageEmbed()
+                .setTitle(args[0].toString())
+                .setDescription('React With The Appropriate Emoji(s) To Vote!')
+                .setFooter('Asked By: ' + msg.author.toString())
+                .setTimestamp()
+            args.forEach(arg => {
+                embed.addField({
+                    name: 'One',
+                    value: arg.toString(),
+                    inline: false
+                });
+            });
         }
     }
 };
