@@ -71,6 +71,7 @@ const cmds = {
             let m = msg.content.toString().toLowerCase().trim();
             m.replace("slowmode ", "");
             let duration = Number(m);
+            if (isNaN(duration)) duration = 0;
             msg.channel.edit({ rateLimitPerUser: duration });
         }
     },
