@@ -81,19 +81,26 @@ const cmds = {
             m.replace("poll ", "");
             let args = m.split("\"");
             const query = args[0];
+            const emojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'];
             args = args.slice(1);
+            if (args.length > 9) {
+                errmsg(msg, "Maximum Allowed Options Is 9");
+                return;
+            }
             let embed = Discord.MessageEmbed()
-                .setTitle(args[0].toString())
+                .setTitle(query.toString())
                 .setDescription('React With The Appropriate Emoji(s) To Vote!')
                 .setFooter('Asked By: ' + msg.author.toString())
-                .setTimestamp()
+                .setTimestamp();
+            let index = 0;
             args.forEach(arg => {
                 embed.addField({
-                    name: 'One',
+                    name: emojis[index++],
                     value: arg.toString(),
                     inline: false
                 });
             });
+            msg.channel.send(embed);
         }
     }
 };

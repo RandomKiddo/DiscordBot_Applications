@@ -42,6 +42,9 @@ export class AppDiscord {
             }
         }
     };
+    private static _errmsg: Function = function(message: Message, client: Client, description: String) {
+        //Code To Be Added
+    };
     static start() {
         this._client = new Client();
         this._client.login(
