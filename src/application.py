@@ -120,4 +120,11 @@ async def clear(ctx, amount=10):
         return
     await ctx.channel.purge(limit=amount)
 
+@client.command()
+async def slowmode(ctx, amount=0):
+    if not ctx.author.guild_permissions.administrator:
+        await errmsg(ctx, 'You don\'t have permission to do this')
+        return
+    await ctx.channel.edit(slowmode_delay=amount)
+
 client.run(TOKEN)

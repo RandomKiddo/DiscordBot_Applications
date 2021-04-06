@@ -25,23 +25,32 @@ client.on('ready', () => {
 	client.user.setActivity('discord.js', { type: 'PLAYING' });
 });
 
+//Error Message Wrapper
+const errmsg = function(msg, description) {
+    const embed = new Discord.MessageEmbed()
+        .setColor('#ff0000')
+        .setTitle('An Error Occurred')
+        .setDescription(description)
+        .setTimestamp();
+    msg.channel.send(embed);
+};
+
 //Holds Command Callbacks
 const cmds = {
     "ping": {
         callback: (msg) => {
             let api = client.ws.ping;
-            let bot = Date.now() - message.createdTimestamp;
-            message.channel.send(`Pong! API: \`${api}ms\`, Bot: \`${bot}ms\``);
+            let bot = Date.now() - msg.createdTimestamp;
+            msg.channel.send(`Pong! API: \`${api}ms\`, Bot: \`${bot}ms\``);
         }
     },
     "clear": {
         callback: (msg) => {
             if (!msg.member.hasPermission('MANAGE_MESSAGES')) {
-                return message.channel.send(
-                    "You can\'t use this command"
-                );
+                errmsg(msg, "You can\'t use this command");
+                return;
             }
-            const args = message.content
+            const args = msg.content
                 .toLowerCase()
                 .slice(PREFIX.length)
                 .trim()
@@ -50,7 +59,19 @@ const cmds = {
             const amount = Number(input) > 100
                 ? 101
                 : Number(input) + 1;
-            message.channel.bulkDelete(amount, true);
+            msg.channel.bulkDelete(amount, true);
+        }
+    },
+    "slowmode": {
+        callback: (msg) => {
+            if (!msg.member.hasPermission('MANAGE_MESSAGES')) {
+                errmsg(msg, "You can\'t use this command");
+                return;
+            }
+            let m = msg.content.toString().toLowerCase().trim();
+            m.replace("slowmode ", "");
+            let duration = Number(m);
+            msg.channel.edit({ rateLimitPerUser: duration });
         }
     },
     "poll": {
