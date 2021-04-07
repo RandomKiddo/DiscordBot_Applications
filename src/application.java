@@ -11,7 +11,7 @@ For more information, see: https://opensource.org/licenses/OSL-3.0
 
 The current maintainer of this work is RandomKiddo
 This work only consists of source code files, written in:
-python, javascript, typescript, go, java, c#
+python, javascript, typescript, go, or java
 */
 
 import net.dv8tion.jda.core.AccountType;
@@ -20,6 +20,7 @@ import net.dv8tion.jda.core.JDABuilder;
 import javax.security.auth.login.LoginException;
 
 public class Main extends ListenerAdapter {
+    private final String PREFIX = "!";
     public static void main(String[] args) throws LoginException {
         JDABuilder builder = new JDABuilder(AccountType.BOT);
         final String TOKEN = "YOUR_TOKEN_HERE";
@@ -29,13 +30,15 @@ public class Main extends ListenerAdapter {
     }
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        if (event.getAuthor().isBot()) {
+        String content = event.getMessage().getContentRaw();
+        if (event.getAuthor().isBot() || !content.contains(PREFIX)) {
             return;
         }
-        if (event.getMessage().getContentRaw().equals("!ping")) {
-            long time = System.currentTimeMillis();
-            String response = String.format("Pong: %dms", time);
-            event.getChannel().sendMessage(response).queue();
+        if (content.toLowerCase().contains("ping")) {
+            ping(event);
         }
+    }
+    public void ping(MessageReceivedEvent event) {
+        event.getChannel().sendMessage("Pong!").queue();
     }
 }
